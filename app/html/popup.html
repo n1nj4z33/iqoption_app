@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <link type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <link type="text/css" href="../css/popup.css" rel="stylesheet">
+    </head>
+<body>
+
+    <div class="page-header">
+        <div class="logo">
+            <img src="../img/logo.png"></img>
+            <h3 id="name"></h3>
+            <h5 id=version>Версия: </h5>
+            <span class="label label-danger">Бета</span>
+        </div>
+    </div>
+ 
+    <div class="container">
+        <div class="list-group">
+            <h5 id="status" class="list-group-item">
+            <button type="button" class="btn btn-default" aria-label="Refresh" id="connect">
+              <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            </button>
+            <span class="glyphicon glyphicon-signal"></span>
+            Статус подключения: 
+            </h5>
+
+        </div>
+        <div id="status_message"></div>
+        <div class="list-group">
+          <button type="button" id="start" class="list-group-item">
+              <span class="glyphicon glyphicon-play"></span>
+              Начать торговлю
+          </button>
+          <button type="button" id="pause" class="list-group-item">
+              <span class="glyphicon glyphicon-pause"></span>
+              Приостановить торговлю
+          </button>
+          <button type="button" id="stop" class="list-group-item">
+              <span class="glyphicon glyphicon-stop"></span>
+              Прекратить торговлю
+          </button>
+          <button type="button" id="options" class="list-group-item">
+              <span class="glyphicon glyphicon-cog"></span>
+              Настройки
+          </button>
+        </div>
+    </div>
+
+  <script type="text/javascript" src="../js/popup.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+    "manifest_version": 2,
+    "name": "IQ Option bot",
+    "short_name": "iqbot",
+    "description": "IQ Option bot",
+    "version": "0.20",
+    "permissions": ["tabs", 
+                    "cookies",
+                    "notifications",
+                    "https://iqoption.com/"],
+    "browser_action": {
+        "default_icon": {
+            "19": "img/logo.png"
+        },
+        "default_popup": "html/popup.html"
+    },
+    "background": {
+        "scripts": ["js/background.js",
+                    "js/connect.js",
+                    "js/cookies.js",
+                    "js/websocket.js",
+                    "js/trade.js",
+                    "js/actives.js",
+                    "js/time.js",
+                    "js/actives.js",
+                    "js/candles.js",
+                    "js/martingale.js"]
+    },
+    "options_page": "html/options.html",
+    "icons": {
+        "128": "img/logo.png"
+    }
+}

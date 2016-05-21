@@ -1,0 +1,16 @@
+html {
+    width: 350px;
+}
+
+body {
+    width: 350px;
+}
+
+.logo {
+  text-align: center;
+}
+
+.logo img {
+  height: 64px;
+  width: 64px;   
+}
