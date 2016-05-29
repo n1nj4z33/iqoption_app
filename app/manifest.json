@@ -3,7 +3,7 @@
     "name": "IQ Option bot",
     "short_name": "iqbot",
     "description": "IQ Option bot",
-    "version": "0.20",
+    "version": "0.26",
     "permissions": ["tabs", 
                     "cookies",
                     "notifications",

@@ -6,6 +6,7 @@ function HandleMessage(request, sender, sendResponse)
     if (request.message == "connect")
     {
         sendResponse({message: "connect"});
+        localStorage.setItem("connected", false);
         createConnection();
     }
     if (request.message == "start")

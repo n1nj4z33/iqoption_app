@@ -91,11 +91,8 @@ function connect() {
         message: "connect",
     },
     function(response) {
-        console.log(response.message)
+        console.log(response.message);
     });
-
-    refreshUI();
-
 };
 
 
@@ -186,9 +183,7 @@ function onLoad() {
 
     element_name.innerHTML = manifest.name;
     element_version.innerHTML = "Версия: " + manifest.version;
-
     refreshUI();
-
 };
 
 window.onload = onLoad();

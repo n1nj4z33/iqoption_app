@@ -14,7 +14,7 @@ function getCandles() {
     var chunk_size = 214;
     console.info("Chunk size: " + chunk_size);
     
-    var from_time = servertimestamp - 120;
+    var from_time = servertimestamp;
     console.info("From time: " + from_time);
 
     var till_time = servertimestamp;
@@ -46,16 +46,23 @@ function parseCandles(candlesData) {
 
         if (candlesData[i][2] >= candlesData[i][1]) {
             console.info("Candle type: " + CandleType.green);
-            var candle = CandleType.green;
+            var type = CandleType.green;
         }
         else {
             console.info("Candle type: " + CandleType.red);
-            var candle = CandleType.red;
+            var type = CandleType.red;
         }
-        parsedCandles.push(candle);
+        
+        var Candle = {
+            timestamp: candlesData[i][0],
+            open: candlesData[i][1],
+            close: candlesData[i][2],
+            high: candlesData[i][3],
+            low: candlesData[i][4],
+            type: type
+        };
+        parsedCandles.push(Candle);
     }
-
-    localStorage.setItem("last_candle",  parsedCandles[0]);
-    localStorage.setItem("current_candle",  parsedCandles[parsedCandles.length - 1])
-
+    
+    localStorage.setItem("candle_open", parsedCandles[0].open);
 };

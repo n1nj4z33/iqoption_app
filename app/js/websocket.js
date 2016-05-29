@@ -1,11 +1,8 @@
-
-
-
 function getWebSocket() {
 
     var wss_url = "wss://iqoption.com/echo/websocket";
     var socket = new WebSocket(wss_url);
-
+    
     socket.onopen = function() {
         
         var ssid = localStorage.getItem("ssid");
@@ -23,6 +20,8 @@ function getWebSocket() {
         socket.send(JSON.stringify({"name": "unSubscribe", "msg": "feedTopTraders2"}))
         socket.send(JSON.stringify({"name": "unSubscribe", "msg": "feedRecentBetsMulti"}))
         socket.send(JSON.stringify({"name": "unSubscribe", "msg": "tournament"}))
+        
+        localStorage.setItem("connected", true);
     };
 
     socket.onmessage = function(event) {
@@ -53,13 +52,17 @@ function getWebSocket() {
         };
         if (json_data.name == "candles") {
             candlesData = json_data.msg.data;
-            parseCandles(candlesData);
         };
         if (json_data.name == "listInfoData") {
-            profit = json_data.msg[0]["profit_amount"];
-            localStorage.setItem("profit", profit);
+            profit_amount = json_data.msg[0]["profit_amount"];
+            localStorage.setItem("profit_amount", profit_amount);
             localStorage.setItem("buyed", false);
             checkProfit();
+            
+        };
+        if (json_data.name == "newChartData") {
+            show_value = json_data.msg["show_value"];
+            localStorage.setItem("show_value", show_value.toString().split(".").join(""));
         }
         // All websocket messages
         // console.log(incomingMessage);
@@ -70,5 +73,9 @@ function getWebSocket() {
         console.error(incomingMessage);
         localStorage.setItem("connected", false);
     };
+
+    socket.onclosed = function(event) {
+        socket.connect();
+    }
     return socket;
 };

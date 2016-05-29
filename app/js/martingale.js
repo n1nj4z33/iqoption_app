@@ -1,48 +1,43 @@
 function Martingale() {
 
     var buyed = localStorage.getItem("buyed");
+    var show_value = localStorage.getItem("show_value");
 
     getTime();
 
-    if (serverTime.getSeconds() == 50) {
-        getCandles();
+    if (serverTime.getSeconds() == 2) {
+        localStorage.setItem("current_value", show_value);
+    };
 
-        var last_candle = localStorage.getItem("last_candle");
-        console.info("last_candle: " + last_candle);
-        var current_candle = localStorage.getItem("current_candle");
-        console.info("current_candle: " + current_candle);
+    if (serverTime.getSeconds() == 1) {
+        localStorage.setItem("start_value", show_value);
 
-        chrome.notifications.create("", {
-            type: "list",
-            iconUrl: "img/logo_w.png",
-            title: "IQ Option bot",
-            message: "Свечи",
-            items: [{ title: "Последняя свеча", message: last_candle},
-                    { title: "Текущая свеча", message: current_candle}]       
-        });
+        var start_value = localStorage.getItem("start_value");
+        var current_value = localStorage.getItem("current_value");
 
-        if (buyed == "false") {
+        if (current_value) {
 
-            if (last_candle == CandleType.green) {
+            if (start_value > current_value ) {
                 var direction = localStorage.setItem("direction", "call");
                 buyActive();
             }
             
-            if (last_candle == CandleType.red) {
+            if (start_value < current_value) {
                 var direction = localStorage.setItem("direction", "put");
                 buyActive();
             }
         }
-    }
+    };
 };
 
 function checkProfit() {
 
-    var profit = localStorage.getItem("profit");
-    var lot = localStorage.getItem("lot");
+    var profit_amount = localStorage.getItem("profit_amount");
+    var start_lot = localStorage.getItem("start_lot");
+    var current_lot = localStorage.getItem("current_lot");
     var martin_leverage = localStorage.getItem("martin_leverage");
 
-    if (profit == lot) {
+    if (profit_amount == current_lot) {
         if (martin_leverage < 5) {
             console.warn("Ничья пробуем еще раз");
 
@@ -52,6 +47,7 @@ function checkProfit() {
                 title: "IQ Option bot",
                 message: "Ничья пробуем еще раз"
             });
+            localStorage.setItem("martin_leverage", martin_leverage + 1)
 
         }
         else {
@@ -63,12 +59,12 @@ function checkProfit() {
                 message: "Ничья но мартин большой, начинаем сначала"
             });
 
-            localStorage.setItem("lot", 30);
+            localStorage.setItem("current_lot", start_lot);
             localStorage.setItem("martin_leverage", 0);
         }
-    }
-    
-    if (profit > 0) {
+    };
+
+    if (profit_amount > 0) {
         console.warn("Выиграли")
         chrome.notifications.create("", {
             type: "basic",
@@ -76,7 +72,7 @@ function checkProfit() {
             title: "IQ Option bot",
             message: "Выиграли"
         });
-        localStorage.setItem("lot", 30);
+        localStorage.setItem("current_lot", start_lot);
         localStorage.setItem("martin_leverage", 0);
     }
     else {
@@ -87,8 +83,7 @@ function checkProfit() {
             title: "IQ Option bot",
             message: "Проиграли увеличиваем ставку"
         });
-        localStorage.setItem("lot", lot * 2.5);
+        localStorage.setItem("current_lot", current_lot * 2.5);
         localStorage.setItem("martin_leverage", +martin_leverage + 1);
     }
-    
-}
+};
