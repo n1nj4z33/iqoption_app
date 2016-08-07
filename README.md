@@ -1,1 +1,1 @@
-#IQ Option bot
+#IQ Option app
